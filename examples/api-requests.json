@@ -1,0 +1,63 @@
+{
+  "requests": [
+    {
+      "operation_id": "createCustomer",
+      "body": {
+        "company_name": "Example Buyer Ltd",
+        "country_code": "US",
+        "contact_email": "buyer@example.com"
+      }
+    },
+    {
+      "operation_id": "createProduct",
+      "body": {
+        "sku": "DEMO-CUP-500-BLK",
+        "name_zh": "演示保温杯",
+        "category_code": "17.06",
+        "unit": "pcs"
+      }
+    },
+    {
+      "operation_id": "createQuotation",
+      "body": {
+        "customer_id": "10000000-0000-4000-8000-000000000001",
+        "currency": "USD",
+        "valid_until": "2026-12-31T23:59:59Z",
+        "trade_terms": {
+          "code": "FCA",
+          "rules_version": "2020",
+          "named_place": "Example warehouse, sample city"
+        },
+        "payment_terms": "示例定金30% 尾款70% 实际条款需另行确认",
+        "lines": [
+          {
+            "product_id": "20000000-0000-4000-8000-000000000001",
+            "product_revision": 1,
+            "quantity": "1000",
+            "unit": "pcs",
+            "unit_price": "12.50",
+            "line_discount": "0.00"
+          }
+        ],
+        "charges": [
+          {
+            "type": "freight",
+            "amount": "300.00"
+          }
+        ]
+      }
+    },
+    {
+      "operation_id": "createPayment",
+      "body": {
+        "customer_id": "10000000-0000-4000-8000-000000000001",
+        "currency": "USD",
+        "gross_amount": "3840.00",
+        "bank_net_amount": "3825.00",
+        "fee_amount": "15.00",
+        "bank_reference": "DEMO-BANK-REF-001",
+        "value_date": "2026-11-24"
+      }
+    }
+  ]
+}

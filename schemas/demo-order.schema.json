@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "fictional_design_fixture_not_live_trade"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "必须在租户允许币种及精度配置中存在"
+    },
+    "currency_scale": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+    },
+    "quantity": {
+      "type": "string",
+      "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "正十进制数量 必须有明确单位"
+    },
+    "unit_price": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "line_discount": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "freight_revenue": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "order_total": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "payments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gross": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+            "description": "非负十进制字符串 精度和业务上限由服务端校验"
+          },
+          "bank_net": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+            "description": "非负十进制字符串 精度和业务上限由服务端校验"
+          },
+          "fee": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+            "description": "非负十进制字符串 精度和业务上限由服务端校验"
+          }
+        },
+        "required": [
+          "gross",
+          "bank_net",
+          "fee"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "shipments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+        "description": "正十进制数量 必须有明确单位"
+      },
+      "minItems": 1
+    },
+    "fx": {
+      "type": "object",
+      "properties": {
+        "base_currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "quote_currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "rate": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "base_currency",
+        "quote_currency",
+        "rate",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "costs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 250
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+            "description": "非负十进制字符串 精度和业务上限由服务端校验"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "description": "必须在租户允许币种及精度配置中存在"
+          }
+        },
+        "required": [
+          "type",
+          "amount",
+          "currency"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "expected_total_cost": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "expected_contribution": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+      "description": "非负十进制字符串 精度和业务上限由服务端校验"
+    },
+    "inventory": {
+      "type": "object",
+      "properties": {
+        "initial_on_hand": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "blocked": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "reserved": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "after_first_dispatch": {
+          "type": "object",
+          "properties": {
+            "on_hand": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            },
+            "reserved": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            },
+            "blocked": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            }
+          },
+          "required": [
+            "on_hand",
+            "reserved",
+            "blocked"
+          ],
+          "additionalProperties": false
+        },
+        "after_second_dispatch": {
+          "type": "object",
+          "properties": {
+            "on_hand": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            },
+            "reserved": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            },
+            "blocked": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+              "description": "非负十进制字符串 精度和业务上限由服务端校验"
+            }
+          },
+          "required": [
+            "on_hand",
+            "reserved",
+            "blocked"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "initial_on_hand",
+        "blocked",
+        "reserved",
+        "after_first_dispatch",
+        "after_second_dispatch"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "kind",
+    "currency",
+    "currency_scale",
+    "quantity",
+    "unit_price",
+    "line_discount",
+    "freight_revenue",
+    "order_total",
+    "payments",
+    "shipments",
+    "fx",
+    "costs",
+    "expected_total_cost",
+    "expected_contribution",
+    "inventory"
+  ],
+  "additionalProperties": false
+}

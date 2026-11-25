@@ -1,0 +1,76 @@
+{
+  "kind": "fictional_design_fixture_not_live_trade",
+  "currency": "USD",
+  "currency_scale": 2,
+  "quantity": "1000",
+  "unit_price": "12.50",
+  "line_discount": "0.00",
+  "freight_revenue": "300.00",
+  "order_total": "12800.00",
+  "payments": [
+    {
+      "gross": "3840.00",
+      "bank_net": "3825.00",
+      "fee": "15.00"
+    },
+    {
+      "gross": "8960.00",
+      "bank_net": "8925.00",
+      "fee": "35.00"
+    }
+  ],
+  "shipments": [
+    "400",
+    "600"
+  ],
+  "fx": {
+    "base_currency": "USD",
+    "quote_currency": "CNY",
+    "rate": "7.2",
+    "note": "演示固定汇率 非市场报价"
+  },
+  "costs": [
+    {
+      "type": "purchase",
+      "amount": "50400.00",
+      "currency": "CNY"
+    },
+    {
+      "type": "logistics",
+      "amount": "300.00",
+      "currency": "USD"
+    },
+    {
+      "type": "inspection",
+      "amount": "100.00",
+      "currency": "USD"
+    },
+    {
+      "type": "packaging",
+      "amount": "150.00",
+      "currency": "USD"
+    },
+    {
+      "type": "bank_fees",
+      "amount": "50.00",
+      "currency": "USD"
+    }
+  ],
+  "expected_total_cost": "7600.00",
+  "expected_contribution": "5200.00",
+  "inventory": {
+    "initial_on_hand": "1000",
+    "blocked": "0",
+    "reserved": "1000",
+    "after_first_dispatch": {
+      "on_hand": "600",
+      "reserved": "600",
+      "blocked": "0"
+    },
+    "after_second_dispatch": {
+      "on_hand": "0",
+      "reserved": "0",
+      "blocked": "0"
+    }
+  }
+}

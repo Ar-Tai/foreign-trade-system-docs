@@ -1,0 +1,19 @@
+# Local environments and generated check output
+.venv/
+__pycache__/
+*.pyc
+.checks/
+dist/
+*.zip
+# Private runtime material is never a document source
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+.DS_Store
+Thumbs.db

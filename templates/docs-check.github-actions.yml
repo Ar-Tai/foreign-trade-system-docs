@@ -1,0 +1,31 @@
+# Reference only: this file is not an enabled GitHub Actions workflow.
+# Enable only after the repository owner confirms workflow-write authorization.
+name: Documentation checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare validation environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r requirements-docs.txt
+      - name: Verify generated documentation
+        run: .venv/bin/python scripts/build_reference.py --check
+      - name: Validate documents and contracts
+        run: .venv/bin/python scripts/check_docs.py
+      - name: Test documentation rules and fixtures
+        run: .venv/bin/python -m unittest discover -s tests -v

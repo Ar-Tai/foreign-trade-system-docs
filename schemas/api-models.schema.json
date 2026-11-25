@@ -1,0 +1,1550 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/api-models.schema.json",
+  "$defs": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "VersionCommand": {
+      "type": "object",
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "expected_version"
+      ],
+      "additionalProperties": false
+    },
+    "ReviewCommand": {
+      "type": "object",
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "expected_version",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "AcceptanceCommand": {
+      "type": "object",
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "evidence_attachment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "acceptance_method": {
+          "type": "string",
+          "enum": [
+            "portal",
+            "signed_document",
+            "manual_evidence"
+          ]
+        }
+      },
+      "required": [
+        "expected_version",
+        "evidence_attachment_id",
+        "acceptance_method"
+      ],
+      "additionalProperties": false
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "parent_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "parent_code"
+      ],
+      "additionalProperties": false
+    },
+    "ProductCreate": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "name_zh": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "name_en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "category_code": {
+          "type": "string",
+          "pattern": "^[0-9]{2}\\.[0-9]{2}$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "sku",
+        "name_zh",
+        "category_code",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "name_zh": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "name_en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "category_code": {
+          "type": "string",
+          "pattern": "^[0-9]{2}\\.[0-9]{2}$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "active",
+            "inactive"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "sku",
+        "name_zh",
+        "category_code",
+        "unit",
+        "revision",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "CustomerCreate": {
+      "type": "object",
+      "properties": {
+        "company_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "contact_email": {
+          "type": "string",
+          "format": "email"
+        },
+        "owner_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "company_name",
+        "country_code"
+      ],
+      "additionalProperties": false
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "company_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "contact_email": {
+          "type": "string",
+          "format": "email"
+        },
+        "owner_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "prospect",
+            "active",
+            "inactive"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "company_name",
+        "country_code",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "InquiryLine": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "product_id",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "InquiryCreate": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "source_channel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "external_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InquiryLine"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "customer_id",
+        "source_channel",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "Inquiry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "source_channel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "external_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InquiryLine"
+          },
+          "minItems": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "new",
+            "clarifying",
+            "qualified",
+            "closed"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "customer_id",
+        "source_channel",
+        "items",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "TradeTerms": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "EXW",
+            "FCA",
+            "CPT",
+            "CIP",
+            "DAP",
+            "DPU",
+            "DDP",
+            "FAS",
+            "FOB",
+            "CFR",
+            "CIF"
+          ]
+        },
+        "rules_version": {
+          "type": "string",
+          "const": "2020"
+        },
+        "named_place": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "code",
+        "rules_version",
+        "named_place"
+      ],
+      "additionalProperties": false
+    },
+    "QuotationLine": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "product_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "unit_price": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "line_discount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        }
+      },
+      "required": [
+        "product_id",
+        "product_revision",
+        "quantity",
+        "unit",
+        "unit_price",
+        "line_discount"
+      ],
+      "additionalProperties": false
+    },
+    "Charge": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        }
+      },
+      "required": [
+        "type",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "QuotationCreate": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "inquiry_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trade_terms": {
+          "$ref": "#/$defs/TradeTerms"
+        },
+        "payment_terms": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QuotationLine"
+          },
+          "minItems": 1
+        },
+        "charges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Charge"
+          }
+        }
+      },
+      "required": [
+        "customer_id",
+        "currency",
+        "valid_until",
+        "trade_terms",
+        "payment_terms",
+        "lines",
+        "charges"
+      ],
+      "additionalProperties": false
+    },
+    "Quotation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "inquiry_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trade_terms": {
+          "$ref": "#/$defs/TradeTerms"
+        },
+        "payment_terms": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QuotationLine"
+          },
+          "minItems": 1
+        },
+        "charges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Charge"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "pending_approval",
+            "approved",
+            "sent",
+            "accepted",
+            "expired",
+            "withdrawn"
+          ]
+        },
+        "total_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "customer_id",
+        "currency",
+        "valid_until",
+        "trade_terms",
+        "payment_terms",
+        "lines",
+        "charges",
+        "status",
+        "total_amount"
+      ],
+      "additionalProperties": false
+    },
+    "OrderCreate": {
+      "type": "object",
+      "properties": {
+        "quotation_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expected_quote_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "customer_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "quotation_id",
+        "expected_quote_version"
+      ],
+      "additionalProperties": false
+    },
+    "OrderLine": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "product_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "product_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "unit_price": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "line_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        }
+      },
+      "required": [
+        "id",
+        "product_id",
+        "product_revision",
+        "quantity",
+        "unit",
+        "unit_price",
+        "line_amount"
+      ],
+      "additionalProperties": false
+    },
+    "SalesOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quotation_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "total_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "commercial_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "confirmed",
+            "closed",
+            "cancelled"
+          ]
+        },
+        "fulfillment_status": {
+          "type": "string",
+          "enum": [
+            "unfulfilled",
+            "partial",
+            "fulfilled"
+          ]
+        },
+        "settlement_status": {
+          "type": "string",
+          "enum": [
+            "unpaid",
+            "partial",
+            "settled"
+          ]
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OrderLine"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "quotation_id",
+        "customer_id",
+        "currency",
+        "total_amount",
+        "commercial_status",
+        "fulfillment_status",
+        "settlement_status",
+        "lines"
+      ],
+      "additionalProperties": false
+    },
+    "InventoryBalance": {
+      "type": "object",
+      "properties": {
+        "stock_lot_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "warehouse_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "product_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "on_hand": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "reserved": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "blocked": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "available": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "stock_lot_id",
+        "warehouse_id",
+        "product_id",
+        "unit",
+        "on_hand",
+        "reserved",
+        "blocked",
+        "available",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "ReservationCreate": {
+      "type": "object",
+      "properties": {
+        "order_line_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "stock_lot_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        }
+      },
+      "required": [
+        "order_line_id",
+        "stock_lot_id",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "order_line_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "stock_lot_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "consumed",
+            "released"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "order_line_id",
+        "stock_lot_id",
+        "quantity",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "ShipmentLine": {
+      "type": "object",
+      "properties": {
+        "order_line_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "reservation_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        }
+      },
+      "required": [
+        "order_line_id",
+        "reservation_id",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "ShipmentCreate": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ShipmentLine"
+          },
+          "minItems": 1
+        },
+        "carrier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "tracking_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "order_id",
+        "lines"
+      ],
+      "additionalProperties": false
+    },
+    "Shipment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "order_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ShipmentLine"
+          },
+          "minItems": 1
+        },
+        "carrier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "tracking_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "ready",
+            "dispatched",
+            "delivered",
+            "closed"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "order_id",
+        "lines",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "ReceivableCreate": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "order_id",
+        "currency",
+        "amount",
+        "due_date"
+      ],
+      "additionalProperties": false
+    },
+    "Receivable": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "order_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "open_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "partial",
+            "settled",
+            "void"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "order_id",
+        "currency",
+        "amount",
+        "due_date",
+        "open_amount",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "PaymentCreate": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "gross_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "bank_net_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "fee_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "bank_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "value_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "customer_id",
+        "currency",
+        "gross_amount",
+        "bank_net_amount",
+        "fee_amount",
+        "bank_reference",
+        "value_date"
+      ],
+      "additionalProperties": false
+    },
+    "PaymentConfirm": {
+      "type": "object",
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "evidence_attachment_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "expected_version",
+        "evidence_attachment_id"
+      ],
+      "additionalProperties": false
+    },
+    "Payment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "customer_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "gross_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "bank_net_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "fee_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        },
+        "bank_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "value_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "confirmed",
+            "reversed"
+          ]
+        },
+        "unallocated_amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "非负十进制字符串 精度和业务上限由服务端校验"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "customer_id",
+        "currency",
+        "gross_amount",
+        "bank_net_amount",
+        "fee_amount",
+        "bank_reference",
+        "value_date",
+        "status",
+        "unallocated_amount"
+      ],
+      "additionalProperties": false
+    },
+    "AllocationCreate": {
+      "type": "object",
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "receivable_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "receivable_expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        }
+      },
+      "required": [
+        "expected_version",
+        "receivable_id",
+        "receivable_expected_version",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "Allocation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "payment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "receivable_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(?=.*[1-9])(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "description": "正十进制数量 必须有明确单位"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "必须在租户允许币种及精度配置中存在"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "payment_id",
+        "receivable_id",
+        "amount",
+        "currency",
+        "created_at"
+      ],
+      "additionalProperties": false
+    },
+    "UploadCreate": {
+      "type": "object",
+      "properties": {
+        "file_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "content_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20971520
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "file_name",
+        "content_type",
+        "size_bytes",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "UploadTicket": {
+      "type": "object",
+      "properties": {
+        "attachment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "upload_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "const": "pending_upload"
+        }
+      },
+      "required": [
+        "attachment_id",
+        "upload_url",
+        "expires_at",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "IntegrationEvent": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "occurred_at",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "EventReceipt": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "duplicate"
+          ]
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "event_id",
+        "status",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "CategoryPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Category"
+          }
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "ProductPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Product"
+          }
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "CustomerPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Customer"
+          }
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "InquiryPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Inquiry"
+          }
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "InventoryBalancePage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InventoryBalance"
+          }
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

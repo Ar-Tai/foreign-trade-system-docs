@@ -1,0 +1,178 @@
+{
+  "version": "0.1.0",
+  "note": "设计约束不是已实现的业务引擎",
+  "machines": {
+    "quotation": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "pending_approval",
+        "approved",
+        "sent",
+        "accepted",
+        "expired",
+        "withdrawn"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "submit",
+          "pending_approval",
+          "complete_fields_and_price_policy"
+        ],
+        [
+          "pending_approval",
+          "approve",
+          "approved",
+          "independent_authorized_approver"
+        ],
+        [
+          "pending_approval",
+          "reject",
+          "draft",
+          "review_reason"
+        ],
+        [
+          "approved",
+          "issue",
+          "sent",
+          "approved_revision_and_safe_attachment"
+        ],
+        [
+          "sent",
+          "accept",
+          "accepted",
+          "authorized_customer_and_before_expiry"
+        ],
+        [
+          "sent",
+          "expire",
+          "expired",
+          "server_time_after_validity"
+        ],
+        [
+          "sent",
+          "withdraw",
+          "withdrawn",
+          "not_already_accepted"
+        ]
+      ]
+    },
+    "sales_order": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "confirmed",
+        "closed",
+        "cancelled"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "confirm",
+          "confirmed",
+          "approvals_credit_terms_and_compliance"
+        ],
+        [
+          "draft",
+          "cancel",
+          "cancelled",
+          "no_fulfillment_or_financial_effect"
+        ],
+        [
+          "confirmed",
+          "close",
+          "closed",
+          "fulfillment_settlement_claims_and_costs_resolved"
+        ]
+      ]
+    },
+    "shipment": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "ready",
+        "dispatched",
+        "delivered",
+        "closed"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "ready",
+          "ready",
+          "stock_quality_documents_and_payment_release"
+        ],
+        [
+          "ready",
+          "dispatch",
+          "dispatched",
+          "valid_reservations_and_atomic_stock_write"
+        ],
+        [
+          "dispatched",
+          "deliver",
+          "delivered",
+          "verified_delivery_evidence"
+        ],
+        [
+          "delivered",
+          "close",
+          "closed",
+          "exceptions_resolved"
+        ]
+      ]
+    },
+    "payment": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "confirmed",
+        "reversed"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "confirm",
+          "confirmed",
+          "independent_finance_review_and_evidence"
+        ],
+        [
+          "confirmed",
+          "reverse",
+          "reversed",
+          "approved_reversal_and_allocation_compensation"
+        ]
+      ]
+    },
+    "attachment": {
+      "initial": "pending_upload",
+      "states": [
+        "pending_upload",
+        "quarantined",
+        "approved",
+        "rejected"
+      ],
+      "transitions": [
+        [
+          "pending_upload",
+          "complete_upload",
+          "quarantined",
+          "size_type_and_hash_match"
+        ],
+        [
+          "quarantined",
+          "approve_scan",
+          "approved",
+          "scan_and_policy_pass"
+        ],
+        [
+          "quarantined",
+          "reject_scan",
+          "rejected",
+          "scan_or_policy_failed"
+        ]
+      ]
+    }
+  }
+}

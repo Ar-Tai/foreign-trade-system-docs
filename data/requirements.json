@@ -1,0 +1,725 @@
+{
+  "version": "0.1.0",
+  "requirements": [
+    {
+      "id": "REQ-M01-01",
+      "module_id": "M01",
+      "title": "租户隔离",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M01-identity-permissions.md",
+      "acceptance": "用户访问另一租户的客户、附件、报表和异步任务时均被拒绝，不泄露资源存在性。",
+      "test_id": "TC-M01-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M01-02",
+      "module_id": "M01",
+      "title": "职责分离",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M01-identity-permissions.md",
+      "acceptance": "付款申请人与付款审批人不能是同一用户，紧急例外必须经独立授权并留下理由。",
+      "test_id": "TC-M01-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M01-03",
+      "module_id": "M01",
+      "title": "会话撤销",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M01-identity-permissions.md",
+      "acceptance": "停用账号后所有后续交互和令牌刷新失败，未完成的导出任务不再交付文件。",
+      "test_id": "TC-M01-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M01-04",
+      "module_id": "M01",
+      "title": "权限审计",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M01-identity-permissions.md",
+      "acceptance": "角色变更记录前后值、操作者、目标用户、原因和请求编号，普通管理员不可删除记录。",
+      "test_id": "TC-M01-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M02-01",
+      "module_id": "M02",
+      "title": "品类导入",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M02-catalog-products.md",
+      "acceptance": "80 个一级类目及 640 个二级类目可完整导入，重复编码和无父类目记录被拒绝。",
+      "test_id": "TC-M02-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M02-02",
+      "module_id": "M02",
+      "title": "SKU唯一性",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M02-catalog-products.md",
+      "acceptance": "同租户 SKU 唯一；另一租户可使用同名编码而不发生数据串联。",
+      "test_id": "TC-M02-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M02-03",
+      "module_id": "M02",
+      "title": "规格版本",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M02-catalog-products.md",
+      "acceptance": "报价引用版本 A 后，产品更新为版本 B 不改变已发出的报价及附件。",
+      "test_id": "TC-M02-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M02-04",
+      "module_id": "M02",
+      "title": "批量导入",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M02-catalog-products.md",
+      "acceptance": "导入先预检并逐行返回错误，确认后提交；同一导入批次重试不生成重复商品。",
+      "test_id": "TC-M02-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M03-01",
+      "module_id": "M03",
+      "title": "供应商准入",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M03-supplier-sourcing.md",
+      "acceptance": "未完成必需资料审核的供应商不可被选入正式采购订单。",
+      "test_id": "TC-M03-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M03-02",
+      "module_id": "M03",
+      "title": "规范化比价",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M03-supplier-sourcing.md",
+      "acceptance": "同一询价中币种、单位或供货范围不一致时显示差异，不以原始数字直接排序。",
+      "test_id": "TC-M03-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M03-03",
+      "module_id": "M03",
+      "title": "收款账户变更",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M03-supplier-sourcing.md",
+      "acceptance": "变更后旧付款申请不自动改账户，新申请需要引用已审批的新账户版本。",
+      "test_id": "TC-M03-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M03-04",
+      "module_id": "M03",
+      "title": "绩效追踪",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M03-supplier-sourcing.md",
+      "acceptance": "按订单计算准时交付、合格率及争议次数，可追溯至对应检验与收货记录。",
+      "test_id": "TC-M03-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M04-01",
+      "module_id": "M04",
+      "title": "客户去重",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M04-customer-crm.md",
+      "acceptance": "相同标识的新客户触发人工确认，确认前不自动合并订单或联系人。",
+      "test_id": "TC-M04-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M04-02",
+      "module_id": "M04",
+      "title": "归属限制",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M04-customer-crm.md",
+      "acceptance": "业务员只能查看授权范围内客户，主管的跨组查看权限可独立配置。",
+      "test_id": "TC-M04-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M04-03",
+      "module_id": "M04",
+      "title": "地址快照",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M04-customer-crm.md",
+      "acceptance": "客户地址变更不修改已确认订单、商业发票或已生成的运输标签。",
+      "test_id": "TC-M04-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M04-04",
+      "module_id": "M04",
+      "title": "授信拦截",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M04-customer-crm.md",
+      "acceptance": "超出已批准账期或额度的订单不能直接确认，必须进入独立授信审批。",
+      "test_id": "TC-M04-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M05-01",
+      "module_id": "M05",
+      "title": "询盘幂等接收",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M05-inquiry-opportunity.md",
+      "acceptance": "同一渠道外部编号重复导入不重复创建询盘，并返回原有业务编号。",
+      "test_id": "TC-M05-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M05-02",
+      "module_id": "M05",
+      "title": "需求版本",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M05-inquiry-opportunity.md",
+      "acceptance": "客户修改数量或规格产生新需求版本，旧报价仍绑定旧需求。",
+      "test_id": "TC-M05-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M05-03",
+      "module_id": "M05",
+      "title": "响应时限",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M05-inquiry-opportunity.md",
+      "acceptance": "按租户工作日历生成待办和超时提醒，跨时区显示当地时间及原始时间。",
+      "test_id": "TC-M05-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M05-04",
+      "module_id": "M05",
+      "title": "商机关闭",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M05-inquiry-opportunity.md",
+      "acceptance": "赢单需关联有效订单；输单必须填写原因且可审计，重新打开保留历史。",
+      "test_id": "TC-M05-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M06-01",
+      "module_id": "M06",
+      "title": "报价审批",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M06-quotation-sample.md",
+      "acceptance": "低于授权毛利或超折扣阈值时必须由具备权限且不是提交者的人员审批。",
+      "test_id": "TC-M06-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M06-02",
+      "module_id": "M06",
+      "title": "报价失效",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M06-quotation-sample.md",
+      "acceptance": "过有效期或被新版本撤回的报价不能接受，服务器按统一时间判定。",
+      "test_id": "TC-M06-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M06-03",
+      "module_id": "M06",
+      "title": "金额快照",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M06-quotation-sample.md",
+      "acceptance": "数量乘单价、折扣、费用和总额可重算且一致，汇率来源和时间被保留。",
+      "test_id": "TC-M06-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M06-04",
+      "module_id": "M06",
+      "title": "样品确认",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M06-quotation-sample.md",
+      "acceptance": "记录样品型号、规格版本、费用承担、寄送编号及客户结论，样品通过不替代批量验货。",
+      "test_id": "TC-M06-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M07-01",
+      "module_id": "M07",
+      "title": "订单来源",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M07-sales-contract-order.md",
+      "acceptance": "仅已接受且未失效的报价可转换；创建时保存完整商业快照。",
+      "test_id": "TC-M07-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M07-02",
+      "module_id": "M07",
+      "title": "确认守卫",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M07-sales-contract-order.md",
+      "acceptance": "必需审批、信用检查、收款条件和限制清单未满足时禁止确认，返回具体阻断项。",
+      "test_id": "TC-M07-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M07-03",
+      "module_id": "M07",
+      "title": "并发变更",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M07-sales-contract-order.md",
+      "acceptance": "两个用户用同一版本修改订单仅一个成功，另一个得到版本冲突而不是覆盖成功。",
+      "test_id": "TC-M07-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M07-04",
+      "module_id": "M07",
+      "title": "取消与结案",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M07-sales-contract-order.md",
+      "acceptance": "已有发货、资金或采购履约的订单不能简单取消，必须走剩余数量取消及退款等补偿流程。",
+      "test_id": "TC-M07-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M08-01",
+      "module_id": "M08",
+      "title": "需求分配",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M08-procurement-production.md",
+      "acceptance": "采购分配到销售行的数量总和可校验，不允许超分配或跨租户分配。",
+      "test_id": "TC-M08-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M08-02",
+      "module_id": "M08",
+      "title": "生产节点",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M08-procurement-production.md",
+      "acceptance": "样品、物料到位、生产、包装及出货节点各有计划、实际时间和证据。",
+      "test_id": "TC-M08-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M08-03",
+      "module_id": "M08",
+      "title": "变更控制",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M08-procurement-production.md",
+      "acceptance": "已确认采购改价、改量或改交期保留原版本并重新审批受影响项。",
+      "test_id": "TC-M08-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M08-04",
+      "module_id": "M08",
+      "title": "部分到货",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M08-procurement-production.md",
+      "acceptance": "采购允许分批收货，已收、拒收、退货和剩余数量可分别追溯。",
+      "test_id": "TC-M08-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M09-01",
+      "module_id": "M09",
+      "title": "检验依据",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M09-quality-inspection.md",
+      "acceptance": "每次检验引用明确规格版本和检验计划，缺失关键判定项不能提交结果。",
+      "test_id": "TC-M09-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M09-02",
+      "module_id": "M09",
+      "title": "库存冻结",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M09-quality-inspection.md",
+      "acceptance": "批次被质量冻结后不可新预留或出运，已预留数量进入阻断清单。",
+      "test_id": "TC-M09-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M09-03",
+      "module_id": "M09",
+      "title": "不合格闭环",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M09-quality-inspection.md",
+      "acceptance": "返工、让步接收、退供应商或报废均需审批及处置数量，处置总量与不合格量相符。",
+      "test_id": "TC-M09-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M09-04",
+      "module_id": "M09",
+      "title": "证据版本",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M09-quality-inspection.md",
+      "acceptance": "检验报告修订保留原件、哈希、复核人和理由，禁止直接替换已批准报告。",
+      "test_id": "TC-M09-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M10-01",
+      "module_id": "M10",
+      "title": "并发预留",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M10-inventory-warehouse.md",
+      "acceptance": "可用 10 件时两个各 8 件预留请求至多一个成功，失败请求不留下半条预留。",
+      "test_id": "TC-M10-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M10-02",
+      "module_id": "M10",
+      "title": "负库存防护",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M10-inventory-warehouse.md",
+      "acceptance": "出库、冻结、盘亏及预留必须保持各分区非负且预留加冻结不超过在手。",
+      "test_id": "TC-M10-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M10-03",
+      "module_id": "M10",
+      "title": "流水幂等",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M10-inventory-warehouse.md",
+      "acceptance": "同一业务来源和操作键重复处理不产生第二笔库存变化。",
+      "test_id": "TC-M10-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M10-04",
+      "module_id": "M10",
+      "title": "盘点调整",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M10-inventory-warehouse.md",
+      "acceptance": "盘点差异先冻结范围并审批，再以调整流水入账，保留盘前盘后数量和原因。",
+      "test_id": "TC-M10-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M11-01",
+      "module_id": "M11",
+      "title": "部分出运",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M11-shipping-logistics.md",
+      "acceptance": "1000 件订单可分 400 与 600 件出运，汇总不超过订购量且每批可独立追踪。",
+      "test_id": "TC-M11-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M11-02",
+      "module_id": "M11",
+      "title": "装箱一致性",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M11-shipping-logistics.md",
+      "acceptance": "箱数、重量、体积和箱内明细可逐级校验，毛重不得小于净重。",
+      "test_id": "TC-M11-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M11-03",
+      "module_id": "M11",
+      "title": "发运守卫",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M11-shipping-logistics.md",
+      "acceptance": "缺少出运许可、有效预留或放行文件时禁止 dispatch，不产生库存扣减。",
+      "test_id": "TC-M11-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M11-04",
+      "module_id": "M11",
+      "title": "轨迹去重",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M11-shipping-logistics.md",
+      "acceptance": "重复或乱序运输事件可保留但不回退已确认的业务状态，异常事件进入人工处理。",
+      "test_id": "TC-M11-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M12-01",
+      "module_id": "M12",
+      "title": "快照一致性",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M12-documents-customs.md",
+      "acceptance": "商业发票与装箱单的出运行、数量、单位和交易主体可自动比对。",
+      "test_id": "TC-M12-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M12-02",
+      "module_id": "M12",
+      "title": "归类证据",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M12-documents-customs.md",
+      "acceptance": "每个实际使用的归类记录包含辖区、编码版本、用途材料说明、审核人和依据。",
+      "test_id": "TC-M12-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M12-03",
+      "module_id": "M12",
+      "title": "单证版本",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M12-documents-customs.md",
+      "acceptance": "已签发文件不得覆盖，修订后旧版本保留并明确失效或被替代状态。",
+      "test_id": "TC-M12-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M12-04",
+      "module_id": "M12",
+      "title": "文件访问",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M12-documents-customs.md",
+      "acceptance": "跨租户下载、过期链接和隔离中的附件全部拒绝，下载记录可审计。",
+      "test_id": "TC-M12-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M13-01",
+      "module_id": "M13",
+      "title": "定金尾款",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M13-finance-settlement.md",
+      "acceptance": "12800 USD 订单可用 3840 与 8960 两笔款结清，重复导入流水不重复计款。",
+      "test_id": "TC-M13-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M13-02",
+      "module_id": "M13",
+      "title": "核销上限",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M13-finance-settlement.md",
+      "acceptance": "并发核销同一余额时只接受不超额的提交，失败操作不部分更新账单。",
+      "test_id": "TC-M13-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M13-03",
+      "module_id": "M13",
+      "title": "手续费分离",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M13-finance-settlement.md",
+      "acceptance": "银行净入账与手续费分别保存，原始收款总额可解释且与核销口径一致。",
+      "test_id": "TC-M13-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M13-04",
+      "module_id": "M13",
+      "title": "冲销退款",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M13-finance-settlement.md",
+      "acceptance": "冲销保持原始流水可追溯；退款需审批并与原付款及相关信用调整关联。",
+      "test_id": "TC-M13-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M14-01",
+      "module_id": "M14",
+      "title": "汇率方向",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M14-cost-profit-fx.md",
+      "acceptance": "示例 1 USD 等于 7.2 CNY 时 50400 CNY 换成 7000 USD，反向计算用倒数且保留精度。",
+      "test_id": "TC-M14-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M14-02",
+      "module_id": "M14",
+      "title": "分摊守恒",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M14-cost-profit-fx.md",
+      "acceptance": "按金额、重量或数量分摊的子项合计等于原费用，尾差有明确承接规则。",
+      "test_id": "TC-M14-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M14-03",
+      "module_id": "M14",
+      "title": "利润重算",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M14-cost-profit-fx.md",
+      "acceptance": "演示订单收入 12800 USD、合计成本 7600 USD，示例订单贡献利润为 5200 USD。",
+      "test_id": "TC-M14-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M14-04",
+      "module_id": "M14",
+      "title": "历史冻结",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M14-cost-profit-fx.md",
+      "acceptance": "修改今日汇率或供应商报价不会重写已关闭订单的成本与利润快照。",
+      "test_id": "TC-M14-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M15-01",
+      "module_id": "M15",
+      "title": "索赔关联",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M15-aftersales-claims.md",
+      "acceptance": "缺少原订单、出运或有效证据时不能直接批准赔付，特殊例外需说明。",
+      "test_id": "TC-M15-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M15-02",
+      "module_id": "M15",
+      "title": "数量守恒",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M15-aftersales-claims.md",
+      "acceptance": "同一订单行累计退货和补偿处理受规则约束，超量提交被阻断。",
+      "test_id": "TC-M15-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M15-03",
+      "module_id": "M15",
+      "title": "退货质检",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M15-aftersales-claims.md",
+      "acceptance": "退货入隔离区后，未通过检验不得被其他订单预留。",
+      "test_id": "TC-M15-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M15-04",
+      "module_id": "M15",
+      "title": "关闭条件",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M15-aftersales-claims.md",
+      "acceptance": "物流、库存、客户确认及财务调整各自完成后才可关闭，不因客服回复而结案。",
+      "test_id": "TC-M15-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M16-01",
+      "module_id": "M16",
+      "title": "交易方隔离",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M16-external-portals.md",
+      "acceptance": "客户甲不能通过修改订单编号查看客户乙订单或附件。",
+      "test_id": "TC-M16-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M16-02",
+      "module_id": "M16",
+      "title": "敏感字段隐藏",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M16-external-portals.md",
+      "acceptance": "门户响应和导出均不包含内部成本、利润、其他供应商报价或未授权联系人。",
+      "test_id": "TC-M16-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M16-03",
+      "module_id": "M16",
+      "title": "确认留痕",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M16-external-portals.md",
+      "acceptance": "报价接受记录具体版本、身份验证信息、时间和证据，不仅记录一个勾选状态。",
+      "test_id": "TC-M16-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M16-04",
+      "module_id": "M16",
+      "title": "撤销即时生效",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M16-external-portals.md",
+      "acceptance": "撤销交易方权限后共享链接和已排队的导出下载均不可继续访问。",
+      "test_id": "TC-M16-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M17-01",
+      "module_id": "M17",
+      "title": "审批失效",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M17-approval-reports-audit.md",
+      "acceptance": "订单改价或改账户后旧版本审批不能用于新版本的放行。",
+      "test_id": "TC-M17-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M17-02",
+      "module_id": "M17",
+      "title": "指标一致",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M17-approval-reports-audit.md",
+      "acceptance": "订单数、出运量、应收余额和贡献利润有唯一公式及排除规则，可抽样回溯。",
+      "test_id": "TC-M17-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M17-03",
+      "module_id": "M17",
+      "title": "导出授权",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M17-approval-reports-audit.md",
+      "acceptance": "导出在提交和下载两个时点检查权限，限制范围、行数与敏感列。",
+      "test_id": "TC-M17-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M17-04",
+      "module_id": "M17",
+      "title": "审计完整",
+      "priority": "P0",
+      "spec_path": "docs/03-product/M17-approval-reports-audit.md",
+      "acceptance": "审批、出运、核销、权限变更和文件下载事件含行为主体、资源、时间及请求编号。",
+      "test_id": "TC-M17-04",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M18-01",
+      "module_id": "M18",
+      "title": "回调防重放",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M18-integrations-notifications.md",
+      "acceptance": "错误签名、过期时间戳和重复事件分别拒绝或幂等确认，不重复产生业务效果。",
+      "test_id": "TC-M18-01",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M18-02",
+      "module_id": "M18",
+      "title": "发件箱一致性",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M18-integrations-notifications.md",
+      "acceptance": "业务提交与待发送事件同事务写入；发送进程崩溃后可继续处理且消费者幂等。",
+      "test_id": "TC-M18-02",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M18-03",
+      "module_id": "M18",
+      "title": "失败重试",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M18-integrations-notifications.md",
+      "acceptance": "瞬时故障按有上限的退避重试，永久错误进入人工队列并记录最后失败原因。",
+      "test_id": "TC-M18-03",
+      "implementation_status": "designed"
+    },
+    {
+      "id": "REQ-M18-04",
+      "module_id": "M18",
+      "title": "周期对账",
+      "priority": "P1",
+      "spec_path": "docs/03-product/M18-integrations-notifications.md",
+      "acceptance": "平台订单、物流轨迹或资金映射差异可定位到原事件，重放前预览影响范围。",
+      "test_id": "TC-M18-04",
+      "implementation_status": "designed"
+    }
+  ]
+}
